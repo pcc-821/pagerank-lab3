@@ -1,0 +1,8 @@
+/build/
+*.class
+__pycache__/
+*.py[cod]
+/mr-result.txt
+/spark-result.txt
+/mr-run.log
+/spark-run.log
