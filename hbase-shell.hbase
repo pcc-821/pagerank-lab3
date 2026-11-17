@@ -1,0 +1,56 @@
+# 建表并录入讲义数据
+tables = list
+create('Student', 'Info') unless tables.include?('Student')
+create('Course', 'Info') unless tables.include?('Course')
+create('SC', 'Score') unless tables.include?('SC')
+
+put 'Student', 'Zhangsan', 'Info:S_No', '2015001'
+put 'Student', 'Zhangsan', 'Info:S_Name', 'Zhangsan'
+put 'Student', 'Zhangsan', 'Info:S_Sex', 'male'
+put 'Student', 'Zhangsan', 'Info:S_Age', '23'
+put 'Student', 'Mary', 'Info:S_No', '2015003'
+put 'Student', 'Mary', 'Info:S_Name', 'Mary'
+put 'Student', 'Mary', 'Info:S_Sex', 'female'
+put 'Student', 'Mary', 'Info:S_Age', '22'
+put 'Student', 'Lisi', 'Info:S_No', '2015003'
+put 'Student', 'Lisi', 'Info:S_Name', 'Lisi'
+put 'Student', 'Lisi', 'Info:S_Sex', 'male'
+put 'Student', 'Lisi', 'Info:S_Age', '24'
+
+put 'Course', '123001', 'Info:C_Name', 'Math'
+put 'Course', '123001', 'Info:C_Credit', '2.0'
+put 'Course', '123002', 'Info:C_Name', 'Computer Science'
+put 'Course', '123002', 'Info:C_Credit', '5.0'
+put 'Course', '123003', 'Info:C_Name', 'English'
+put 'Course', '123003', 'Info:C_Credit', '3.0'
+
+put 'SC', '2015001', 'Score:Math', '86'
+put 'SC', '2015001', 'Score:English', '69'
+put 'SC', '2015002', 'Score:Computer Science', '77'
+put 'SC', '2015002', 'Score:English', '99'
+put 'SC', '2015003', 'Score:Math', '98'
+put 'SC', '2015003', 'Score:Computer Science', '95'
+
+# 列表、表结构、全表扫描、单列扫描与计数
+list
+describe 'Student'
+scan 'Student'
+scan 'Course'
+scan 'SC'
+scan 'SC', { COLUMNS => ['Score:Math'] }
+count 'Student'
+count 'Course'
+count 'SC'
+
+# 在测试表演示增删列族、列限定符，以及清空记录
+put 'lab3_smoke', 'row1', 'info:name', 'test'
+alter 'lab3_smoke', 'temp'
+put 'lab3_smoke', 'row1', 'temp:note', 'example'
+scan 'lab3_smoke'
+deleteall 'lab3_smoke', 'row1', 'temp:note'
+alter 'lab3_smoke', { NAME => 'temp', METHOD => 'delete' }
+describe 'lab3_smoke'
+count 'lab3_smoke'
+truncate 'lab3_smoke'
+count 'lab3_smoke'
+exit
